@@ -57,8 +57,8 @@ export const submitAssignment = (data) =>
     }
   });
 
-  export const getSubmissions = (batchId, title) =>
-  API.get(`/assignment/submissions/${batchId}/${title}`);
+export const getSubmissions = (batch_id, title) =>
+  API.get(`/assignment/submissions/${batch_id}/${title}`);
 
 
 // =========================
