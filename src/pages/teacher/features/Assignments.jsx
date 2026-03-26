@@ -7,7 +7,7 @@ import {
 } from "../../../services/batchService";
 
 function Assignments() {
-  const { name } = useParams(); // batch_id
+  const { name } = useParams();
 
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -20,8 +20,12 @@ function Assignments() {
   const [submissions, setSubmissions] = useState([]);
 
   const fetch = async () => {
-    const res = await getAssignments(name);
-    setList(res.data);
+    try {
+      const res = await getAssignments(name);
+      setList(res.data);
+    } catch (err) {
+      console.log("Fetch error:", err);
+    }
   };
 
   useEffect(() => {
@@ -29,31 +33,47 @@ function Assignments() {
   }, []);
 
   const handleCreate = async () => {
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append("batch_id", name);
-    formData.append("title", title);
-    formData.append("description", desc);
-    formData.append("deadline", deadline);
+      formData.append("batch_id", name);
+      formData.append("title", title);
+      formData.append("description", desc);
+      formData.append("deadline", deadline);
 
-    if (file) {
-      formData.append("file", file);
+      if (file) {
+        formData.append("file", file);
+      }
+
+      await createAssignment(formData);
+
+      setTitle("");
+      setDesc("");
+      setDeadline("");
+      setFile(null);
+
+      fetch();
+    } catch (err) {
+      console.log("Create error:", err);
     }
-
-    await createAssignment(formData);
-
-    setTitle("");
-    setDesc("");
-    setDeadline("");
-    setFile(null);
-
-    fetch();
   };
 
+  // 🔥 FIXED FUNCTION
   const handleView = async (title) => {
-    setSelected(title);
-    const res = await getSubmissions(name, title);
-    setSubmissions(res.data);
+    try {
+      setSelected(title);
+
+      const encodedTitle = encodeURIComponent(title); // 🔥 IMPORTANT
+
+      const res = await getSubmissions(name, encodedTitle);
+
+      console.log("SUBMISSIONS:", res.data); // debug
+
+      setSubmissions(res.data);
+    } catch (err) {
+      console.log("View submissions error:", err.response?.data || err.message);
+      alert("Error loading submissions");
+    }
   };
 
   return (
@@ -97,11 +117,11 @@ function Assignments() {
 
           {a.file && (
             <a
-  href={`https://studyorbit-backend.onrender.com/uploads/${a.file}`}
-  target="_blank"
->
-  View PDF
-</a>
+              href={`https://studyorbit-backend.onrender.com/uploads/${a.file}`}
+              target="_blank"
+            >
+              View PDF
+            </a>
           )}
 
           <br />
@@ -127,11 +147,11 @@ function Assignments() {
 
                 {s.file && (
                   <a
-  href={`https://studyorbit-backend.onrender.com/uploads/${s.file}`}
-  target="_blank"
->
-  View PDF
-</a>
+                    href={`https://studyorbit-backend.onrender.com/uploads/${s.file}`}
+                    target="_blank"
+                  >
+                    View PDF
+                  </a>
                 )}
               </div>
             ))
