@@ -38,11 +38,11 @@ function Notes() {
 
             {note.file && (
               <a
-                href={`http://127.0.0.1:5000/uploads/${note.file}`}
-                target="_blank"
-              >
-                Download PDF
-              </a>
+  href={`https://studyorbit-backend.onrender.com/uploads/${note.file}`}
+  target="_blank"
+>
+  Download PDF
+</a>
             )}
           </div>
         ))

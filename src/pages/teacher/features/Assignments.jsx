@@ -97,11 +97,11 @@ function Assignments() {
 
           {a.file && (
             <a
-              href={`http://127.0.0.1:5000/uploads/${a.file}`}
-              target="_blank"
-            >
-              View PDF
-            </a>
+  href={`https://studyorbit-backend.onrender.com/uploads/${a.file}`}
+  target="_blank"
+>
+  View PDF
+</a>
           )}
 
           <br />
@@ -127,11 +127,11 @@ function Assignments() {
 
                 {s.file && (
                   <a
-                    href={`http://127.0.0.1:5000/uploads/${s.file}`}
-                    target="_blank"
-                  >
-                    View PDF
-                  </a>
+  href={`https://studyorbit-backend.onrender.com/uploads/${s.file}`}
+  target="_blank"
+>
+  View PDF
+</a>
                 )}
               </div>
             ))

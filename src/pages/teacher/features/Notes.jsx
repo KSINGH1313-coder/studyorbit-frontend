@@ -85,11 +85,11 @@ const handleAdd = async () => {
           <p>{note.description}</p>
           {note.file && (
             <a
-              href={`http://127.0.0.1:5000/uploads/${note.file}`}
-              target="_blank"
-            >
-              View PDF
-            </a>
+  href={`https://studyorbit-backend.onrender.com/uploads/${note.file}`}
+  target="_blank"
+>
+  View PDF
+</a>
           )}
         </div>
       ))}
